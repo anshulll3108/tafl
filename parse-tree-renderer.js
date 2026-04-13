@@ -1,6 +1,6 @@
 /**
  * Parse Tree Renderer Module
- * Renders a parse tree onto an HTML5 Canvas with a cinematic dark futuristic aesthetic.
+ * Renders a parse tree onto an HTML5 Canvas with a clean professional aesthetic.
  */
 
 class ParseTreeRenderer {
@@ -11,21 +11,21 @@ class ParseTreeRenderer {
         this.tree = null;
         this.layoutData = null;
 
-        // Cinematic styling
+        // Clean professional styling
         this.colors = {
-            bg: '#0a0812',
-            node_nt: '#ffaa55',
-            node_nt_bg: 'rgba(255,140,50,0.1)',
-            node_nt_border: 'rgba(255,160,60,0.5)',
-            node_t: '#ffd700',
-            node_t_bg: 'rgba(255,215,0,0.08)',
-            node_t_border: 'rgba(255,215,0,0.5)',
-            node_eps: '#06d6a0',
-            node_eps_bg: 'rgba(6,214,160,0.08)',
-            node_eps_border: 'rgba(6,214,160,0.5)',
-            edge: 'rgba(255,140,50,0.25)',
-            edgeGlow: 'rgba(255,140,50,0.08)',
-            text: '#f0e6d8',
+            bg: '#ffffff',
+            node_nt: '#2563eb',
+            node_nt_bg: 'rgba(37, 99, 235, 0.1)',
+            node_nt_border: 'rgba(37, 99, 235, 0.3)',
+            node_t: '#1d4ed8',
+            node_t_bg: 'rgba(29, 78, 216, 0.08)',
+            node_t_border: 'rgba(29, 78, 216, 0.3)',
+            node_eps: '#10b981',
+            node_eps_bg: 'rgba(16, 185, 129, 0.08)',
+            node_eps_border: 'rgba(16, 185, 129, 0.3)',
+            edge: 'rgba(148, 163, 184, 0.6)',
+            edgeGlow: 'rgba(148, 163, 184, 0.2)',
+            text: '#1e293b',
         };
 
         this.nodeRadius = 24;
