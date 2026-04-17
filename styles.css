@@ -783,44 +783,72 @@ body {
 }
 
 /* --- Header Controls Container --- */
+/* --- Header Controls Container --- */
 .header-controls {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-top: 20px;
     justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
     flex-wrap: wrap;
+}
+
+/* --- Base Button Normalization --- */
+.header-controls button {
+    /* Remove all browser defaults */
+    outline: none;
+    margin: 0;
+    
+    /* Unified sizing */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 20px;
+    gap: 8px;
+    
+    /* Typography */
+    font-family: var(--font-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    
+    /* Visual style */
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Icon sizing for both buttons */
+.header-controls button span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    line-height: 1;
+    white-space: nowrap;
 }
 
 /* --- View Toggle Button --- */
 .view-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    border: 2px solid var(--blue-primary);
-    border-radius: 999px;
     background: var(--blue-accent);
     color: var(--blue-primary);
-    font: inherit;
-    font-weight: 600;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all var(--transition);
-    box-shadow: var(--shadow-sm);
-    letter-spacing: 0.02em;
+    border: 2px solid var(--blue-primary);
 }
 
-.view-toggle:hover {
-    transform: translateY(-2px);
+.view-toggle:hover,
+.view-toggle:focus {
     background: var(--blue-primary);
     color: white;
     box-shadow: var(--shadow);
+    transform: translateY(-2px);
 }
 
-.toggle-icon {
-    font-size: 1.1rem;
-    line-height: 1;
+.view-toggle:active {
+    transform: translateY(0);
 }
 
 .view-toggle.active {
@@ -830,38 +858,27 @@ body {
 
 /* --- Theme Toggle Button --- */
 .theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
-    padding: 10px 16px;
-    border: 1px solid var(--border-color);
-    border-radius: 999px;
     background: var(--bg-card);
     color: var(--text-primary);
-    font: inherit;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transition);
-    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
 }
 
-.theme-toggle:hover {
-    transform: translateY(-1px);
+.theme-toggle:hover,
+.theme-toggle:focus {
     border-color: var(--blue-primary);
     background: var(--blue-accent);
     box-shadow: var(--shadow);
+    transform: translateY(-2px);
 }
 
-.theme-toggle-icon {
-    font-size: 1rem;
-    line-height: 1;
+.theme-toggle:active {
+    transform: translateY(0);
 }
 
-.theme-toggle-text {
-    font-size: 0.875rem;
-    letter-spacing: 0.02em;
-}
+/* Deprecated classes (kept for backward compatibility) */
+.toggle-icon { /* Empty - handled by span styling */ }
+.theme-toggle-icon { /* Empty - handled by span styling */ }
+.theme-toggle-text { /* Empty - handled by span styling */ }
 
 /* --- Dark Mode Overrides --- */
 body.dark {
@@ -963,24 +980,29 @@ body.dark .step-content .highlight {
     border-bottom: 1px solid var(--blue-light);
 }
 
+/* Dark mode - Theme Toggle */
 body.dark .theme-toggle {
     background: rgba(15, 23, 42, 0.88);
     border-color: var(--border-color);
     color: var(--text-primary);
 }
 
-body.dark .theme-toggle:hover {
+body.dark .theme-toggle:hover,
+body.dark .theme-toggle:focus {
     background: rgba(96, 165, 250, 0.1);
     border-color: var(--blue-primary);
+    color: var(--text-primary);
 }
 
+/* Dark mode - View Toggle */
 body.dark .view-toggle {
     border-color: var(--blue-primary);
     background: var(--blue-accent);
     color: var(--blue-light);
 }
 
-body.dark .view-toggle:hover {
+body.dark .view-toggle:hover,
+body.dark .view-toggle:focus {
     background: var(--blue-primary);
     color: white;
 }
@@ -1012,4 +1034,40 @@ body.dark .view-toggle.active {
         opacity: 1;
     }
 }
+
+/* --- Responsive Header Controls --- */
+@media (max-width: 768px) {
+    .header-controls {
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .header-controls button {
+        height: 38px;
+        padding: 0 16px;
+        font-size: 0.8125rem;
+    }
+
+    .header-controls button span {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-controls {
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .header-controls button {
+        height: 36px;
+        padding: 0 14px;
+        font-size: 0.75rem;
+    }
+
+    .header-controls button span {
+        font-size: 0.95rem;
+    }
+}
+
 
