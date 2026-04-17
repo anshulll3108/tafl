@@ -1,0 +1,808 @@
+/* =============================================
+   THEORY SECTION — RESPONSIVE CSS STYLING
+   ============================================= */
+
+/* --- Section Container --- */
+.theory-section {
+    width: 100%;
+    padding: 60px 20px;
+    background: linear-gradient(
+        135deg,
+        var(--bg-primary) 0%,
+        var(--bg-secondary) 100%
+    );
+    border-top: 1px solid var(--border-color);
+}
+
+.theory-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* --- Section Header --- */
+.theory-header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.theory-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 12px 0;
+    letter-spacing: -0.5px;
+}
+
+.theory-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin: 0;
+    font-weight: 400;
+}
+
+/* --- Main Grid Layout --- */
+.theory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.theory-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* --- Theory Cards --- */
+.theory-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+.theory-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.theory-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.theory-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.theory-card:hover {
+    border-color: var(--blue-light);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-body p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+}
+
+.card-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- Text Highlighting --- */
+.term-highlight {
+    color: var(--blue-primary);
+    font-weight: 600;
+    background: var(--blue-accent);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* --- Inline Code --- */
+.code-inline {
+    font-family: var(--font-mono);
+    background: var(--bg-secondary);
+    color: var(--blue-primary);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+}
+
+/* --- Elements List --- */
+.element-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.element-item {
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--blue-primary);
+    border-radius: 4px;
+}
+
+.element-label {
+    font-weight: 600;
+    color: var(--blue-primary);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+}
+
+.element-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+/* --- Info Boxes --- */
+.info-box {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+    border-left: 3px solid var(--blue-primary);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 16px 0 0 0 !important;
+    color: var(--text-primary);
+}
+
+/* --- Example Box --- */
+.example-box {
+    background: var(--bg-secondary);
+    padding: 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+    border: 1px dashed var(--border-hover);
+}
+
+.example-box strong {
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+/* --- Derivation Example --- */
+.derivation-example {
+    font-family: var(--font-mono);
+    background: var(--bg-primary);
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: var(--blue-primary);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.example-caption {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 8px 0 0 0 !important;
+    font-style: italic;
+}
+
+/* --- Tree Structure --- */
+.tree-structure {
+    margin-top: 12px;
+}
+
+.tree-structure strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.property-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.property-list li {
+    padding: 8px 0 8px 20px;
+    position: relative;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.property-list li:before {
+    content: "◆";
+    position: absolute;
+    left: 0;
+    color: var(--blue-primary);
+    font-size: 0.7rem;
+}
+
+/* --- Comparison Table --- */
+.comparison-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 16px 0;
+}
+
+.comp-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.comp-row:last-child {
+    border-bottom: none;
+}
+
+.comp-row:first-child {
+    background: linear-gradient(135deg, var(--blue-accent) 0%, var(--bg-secondary) 100%);
+    border-bottom: 2px solid var(--border-hover);
+}
+
+.comp-label,
+.comp-left,
+.comp-right {
+    padding: 12px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.comp-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+}
+
+.comp-left,
+.comp-right {
+    color: var(--text-primary);
+}
+
+.comp-row:first-child .comp-label,
+.comp-row:first-child .comp-left,
+.comp-row:first-child .comp-right {
+    background: transparent;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* --- Importance List --- */
+.importance-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.importance-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    align-items: flex-start;
+}
+
+.importance-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.importance-item div {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.importance-item strong {
+    color: var(--blue-primary);
+}
+
+/* --- Full Width Example --- */
+.theory-full-example {
+    margin: 48px 0;
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+.example-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.example-part {
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.example-part h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 12px 0;
+    letter-spacing: -0.3px;
+}
+
+/* --- Grammar Box --- */
+.grammar-box {
+    background: var(--bg-primary);
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    margin: 10px 0;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.grammar-rule {
+    padding: 6px 0;
+    color: var(--text-primary);
+    line-height: 1.8;
+}
+
+.arrow {
+    color: var(--blue-primary);
+    font-weight: 600;
+    margin: 0 6px;
+}
+
+.grammar-info {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 10px 0 0 0 !important;
+}
+
+/* --- Derivation Steps --- */
+.derivation-steps {
+    background: var(--bg-primary);
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    margin: 10px 0;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.9;
+    color: var(--text-primary);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.derivation-steps::-webkit-scrollbar {
+    width: 6px;
+}
+
+.derivation-steps::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 3px;
+}
+
+.derivation-steps::-webkit-scrollbar-thumb {
+    background: var(--border-hover);
+    border-radius: 3px;
+}
+
+.derivation-steps::-webkit-scrollbar-thumb:hover {
+    background: var(--border-color);
+}
+
+.step {
+    display: inline-block;
+}
+
+.step-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.step-arrow {
+    display: block;
+    text-align: center;
+    color: var(--blue-primary);
+    font-weight: 600;
+    margin: 2px 0;
+}
+
+/* --- Tree Visual --- */
+.tree-visual {
+    background: var(--bg-primary);
+    padding: 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    margin: 10px 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.tree-node {
+    display: inline-block;
+    padding: 8px 12px;
+    background: var(--blue-accent);
+    border: 2px solid var(--blue-primary);
+    border-radius: 6px;
+    color: var(--blue-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 4px;
+}
+
+.tree-node.terminal {
+    background: var(--bg-secondary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+}
+
+.tree-node.operator {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.tree-children {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.tree-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tree-caption {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 8px !important;
+    font-style: italic;
+}
+
+.example-explanation {
+    background: var(--bg-secondary);
+    padding: 14px;
+    border-left: 3px solid var(--blue-primary);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-top: 16px !important;
+    color: var(--text-primary);
+}
+
+/* --- Conclusion Section --- */
+.theory-conclusion {
+    background: linear-gradient(135deg, var(--blue-accent) 0%, rgba(219, 234, 254, 0.5) 100%);
+    border: 2px solid var(--blue-light);
+    border-radius: var(--radius);
+    padding: 32px;
+    animation: fadeInUp 0.6s ease-out 0.5s both;
+}
+
+.conclusion-content {
+    max-width: 100%;
+}
+
+.conclusion-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 24px 0;
+    letter-spacing: -0.3px;
+}
+
+.conclusion-points {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.conclusion-point {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.conclusion-point:hover {
+    border-color: var(--blue-light);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    transform: translateY(-2px);
+}
+
+.point-number {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--blue-primary);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.conclusion-point p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.conclusion-point strong {
+    color: var(--blue-primary);
+}
+
+/* --- Animations --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Dark Mode Support --- */
+body.dark .theory-section {
+    --bg-primary: #1a1f2e;
+    --bg-secondary: #242d3d;
+    --bg-card: #1e2838;
+    --bg-accent: #1e3a5f;
+    --border-color: #3d4557;
+    --border-hover: #4d5668;
+    --text-primary: #e8ecf1;
+    --text-secondary: #a8b2c1;
+    --blue-accent: #1e3a5f;
+}
+
+body.dark .theory-card {
+    background: var(--bg-card);
+}
+
+body.dark .term-highlight {
+    background: var(--blue-accent);
+}
+
+body.dark .code-inline {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+body.dark .example-box,
+body.dark .example-part {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+body.dark .derivation-example,
+body.dark .grammar-box,
+body.dark .derivation-steps,
+body.dark .tree-visual {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+}
+
+body.dark .element-item,
+body.dark .importance-item {
+    background: var(--bg-secondary);
+}
+
+body.dark .comparison-table {
+    border-color: var(--border-color);
+}
+
+body.dark .comp-row {
+    border-color: var(--border-color);
+}
+
+body.dark .comp-label {
+    background: var(--bg-secondary);
+}
+
+body.dark .theory-conclusion {
+    background: linear-gradient(135deg, rgba(30, 58, 95, 0.3) 0%, rgba(30, 58, 95, 0.15) 100%);
+    border-color: var(--blue-dark);
+}
+
+body.dark .conclusion-point {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+/* --- Responsive Design --- */
+
+@media (max-width: 1024px) {
+    .theory-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .example-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-table {
+        font-size: 0.85rem;
+    }
+
+    .comp-label,
+    .comp-left,
+    .comp-right {
+        padding: 10px;
+    }
+
+    .theory-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .theory-section {
+        padding: 40px 16px;
+    }
+
+    .theory-title {
+        font-size: 1.75rem;
+    }
+
+    .theory-subtitle {
+        font-size: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .conclusion-points {
+        grid-template-columns: 1fr;
+    }
+
+    .theory-conclusion {
+        padding: 24px;
+    }
+
+    .comp-row {
+        grid-template-columns: 0.6fr 1fr;
+    }
+
+    .comp-label {
+        grid-column: 1 / -1;
+        font-weight: 600;
+        background: var(--bg-secondary);
+    }
+
+    .comp-row:first-child {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .comp-row:first-child .comp-label {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 480px) {
+    .theory-section {
+        padding: 32px 12px;
+    }
+
+    .theory-header {
+        margin-bottom: 32px;
+    }
+
+    .theory-title {
+        font-size: 1.5rem;
+    }
+
+    .theory-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .card-header {
+        padding: 16px;
+    }
+
+    .card-body {
+        padding: 16px;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .card-body p {
+        font-size: 0.9rem;
+    }
+
+    .derivation-steps {
+        font-size: 0.8rem;
+        line-height: 1.7;
+        max-height: 250px;
+    }
+
+    .example-part h4 {
+        font-size: 0.95rem;
+    }
+
+    .grammar-box,
+    .tree-visual {
+        font-size: 0.8rem;
+    }
+
+    .tree-node {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .conclusion-point {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .point-number {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+    }
+
+    .conclusion-point p {
+        font-size: 0.85rem;
+    }
+
+    .theory-conclusion {
+        padding: 16px;
+    }
+
+    .conclusion-title {
+        font-size: 1.25rem;
+        margin-bottom: 16px;
+    }
+}

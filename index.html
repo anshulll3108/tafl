@@ -6,28 +6,44 @@
     <meta name="description" content="CFG Derivation & Parse Tree Generator — Generate leftmost and rightmost derivation sequences and parse trees for context-free grammars. A premium tool for compiler theory and formal languages.">
     <title>CFG Derivation & Parse Tree Generator</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theory-section.css">
 </head>
 <body>
 
-    <!-- Hero Section -->
-    <header class="hero-section" id="hero">
-        <h1 class="hero-title">CFG Derivation &amp; Parse Tree Generator</h1>
-        <p class="hero-subtitle">Leftmost &amp; rightmost derivations • parse tree • fully offline</p>
-    </header>
+   <!-- Hero Section -->
+<header class="hero-section" id="hero">
+    <h1 class="hero-title">CFG Derivation &amp; Parse Tree Generator</h1>
+    <p class="hero-subtitle">Leftmost &amp; rightmost derivations • parse tree • fully offline</p>
 
-    <!-- Preset Pills -->
-    <section class="preset-section" id="preset-section">
-        <p class="preset-label">⚡ Try Presets</p>
-        <div class="preset-pills" id="preset-pills">
-            <button class="preset-pill" data-preset="anbn" onclick="loadPreset('anbn', this)">aⁿbⁿ</button>
-            <button class="preset-pill" data-preset="simpleab" onclick="loadPreset('simpleab', this)">Simple AB</button>
-            <button class="preset-pill" data-preset="arithmetic" onclick="loadPreset('arithmetic', this)">Arithmetic</button>
-            <button class="preset-pill" data-preset="palindrome" onclick="loadPreset('palindrome', this)">Palindrome</button>
-        </div>
-    </section>
+    <div class="header-controls">
+        <button id="view-toggle" class="view-toggle" type="button" aria-label="Toggle view">
+            <span class="toggle-icon">📚</span>
+            <span class="toggle-label">Theory</span>
+        </button>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <span class="theme-toggle-icon">🌙</span>
+            <span class="theme-toggle-text">Dark Mode</span>
+        </button>
+    </div>
+</header>
 
-    <!-- Main Content -->
-    <main id="app-main">
+<!-- View Sections Toggle -->
+<div class="view-sections">
+    <!-- SIMULATION VIEW -->
+    <div id="simulation-view" class="view-content active">
+        <!-- Preset Pills -->
+        <section class="preset-section" id="preset-section">
+            <p class="preset-label">⚡ Try Presets</p>
+            <div class="preset-pills" id="preset-pills">
+                <button class="preset-pill" data-preset="anbn" onclick="loadPreset('anbn', this)">aⁿbⁿ</button>
+                <button class="preset-pill" data-preset="simpleab" onclick="loadPreset('simpleab', this)">Simple AB</button>
+                <button class="preset-pill" data-preset="arithmetic" onclick="loadPreset('arithmetic', this)">Arithmetic</button>
+                <button class="preset-pill" data-preset="palindrome" onclick="loadPreset('palindrome', this)">Palindrome</button>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main id="app-main">
         <!-- Input Section -->
         <section id="input-section" class="glass-panel" style="animation-delay: 0.3s">
             <div class="panel-header">
@@ -144,8 +160,422 @@
             </div>
         </section>
     </main>
+    </div>
 
-    <!-- Footer -->
+    <!-- THEORY VIEW -->
+    <div id="theory-view" class="view-content">
+        <!-- =============================================
+             THEORY SECTION — CFG & DERIVATION CONCEPTS
+             ============================================= -->
+        <section id="theory-section" class="theory-section">
+        <div class="theory-container">
+            
+            <!-- Section Header -->
+            <div class="theory-header">
+                <h2 class="theory-title">📚 Theoretical Foundation</h2>
+                <p class="theory-subtitle">Understanding Context-Free Grammars, Derivations, and Parse Trees</p>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="theory-grid">
+
+                <!-- ========== COLUMN 1: CFG Fundamentals ========== -->
+                <div class="theory-column">
+                    
+                    <!-- Card: What is CFG -->
+                    <div class="theory-card">
+                        <div class="card-header">
+                            <h3 class="card-title">What is a Context-Free Grammar?</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                A <span class="term-highlight">Context-Free Grammar (CFG)</span> is a formal system used to define the 
+                                structure and syntax of formal languages. It consists of a finite set of 
+                                <span class="term-highlight">production rules</span> that recursively generate strings belonging to a language.
+                            </p>
+                            <p>
+                                CFGs are fundamental in computer science because they can describe most programming 
+                                language syntax. They form the foundation of parsing and compiler design.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card: Elements of CFG -->
+                    <div class="theory-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Elements of a CFG</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="element-list">
+                                <div class="element-item">
+                                    <span class="element-label">Terminals (Σ)</span>
+                                    <p>Basic symbols that form the actual strings in the language. Usually lowercase letters or digits. 
+                                       Example: <code class="code-inline">a</code>, <code class="code-inline">b</code>, <code class="code-inline">+</code>, <code class="code-inline">*</code></p>
+                                </div>
+                                <div class="element-item">
+                                    <span class="element-label">Non-Terminals (V)</span>
+                                    <p>Intermediate symbols that represent sequences of symbols. Usually uppercase letters. 
+                                       These are replaced by the production rules. Example: <code class="code-inline">S</code>, <code class="code-inline">A</code>, <code class="code-inline">E</code></p>
+                                </div>
+                                <div class="element-item">
+                                    <span class="element-label">Production Rules (P)</span>
+                                    <p>Rewrite rules of the form <code class="code-inline">A → α</code>, where <code class="code-inline">A</code> is a non-terminal and 
+                                       <code class="code-inline">α</code> is a sequence of terminals and non-terminals. 
+                                       Example: <code class="code-inline">S → aSb | ε</code></p>
+                                </div>
+                                <div class="element-item">
+                                    <span class="element-label">Start Symbol (S)</span>
+                                    <p>A special non-terminal from which all derivations begin. Typically denoted as <code class="code-inline">S</code>. 
+                                       The starting point for generating strings in the language.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Derivation in CFG -->
+                    <div class="theory-card">
+                        <div class="card-header">
+                            <h3 class="card-title">What is Derivation?</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                A <span class="term-highlight">derivation</span> is a sequence of steps that shows how a string can be 
+                                generated from a grammar's start symbol. In each step, we replace one non-terminal 
+                                with the right-hand side (RHS) of one of its production rules.
+                            </p>
+                            <p>
+                                The derivation process continues until only terminal symbols remain (or <span class="term-highlight">epsilon (ε)</span> 
+                                for empty string). If we reach the target string, that string is <span class="term-highlight">derivable</span> 
+                                from the grammar.
+                            </p>
+                            <p class="info-box">
+                                <strong>Note:</strong> A single string may have multiple derivations 
+                                (one for each different order of replacing non-terminals).
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ========== COLUMN 2: Derivation Types ========== -->
+                <div class="theory-column">
+
+                    <!-- Card: Leftmost Derivation -->
+                    <div class="theory-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Leftmost Derivation</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                A <span class="term-highlight">leftmost derivation</span> is a derivation where at each step, 
+                                the <strong>leftmost non-terminal</strong> is replaced.
+                            </p>
+                            <p>
+                                This provides a deterministic way to generate strings and is commonly used in parsers 
+                                (like <code class="code-inline">LL</code> parsers) because we read input from left to right.
+                            </p>
+                            <div class="example-box">
+                                <strong>Example:</strong> Grammar <code class="code-inline">S → aS | b</code>
+                                <div class="derivation-example">
+                                    S<br/>
+                                    ⇒ aS<br/>
+                                    ⇒ aaS<br/>
+                                    ⇒ aab
+                                </div>
+                                <p class="example-caption">At each step, we replace the leftmost <code class="code-inline">S</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Rightmost Derivation -->
+                    <div class="theory-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Rightmost Derivation</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                A <span class="term-highlight">rightmost derivation</span> (also called <span class="term-highlight">canonical derivation</span>) 
+                                is a derivation where at each step, the <strong>rightmost non-terminal</strong> is replaced.
+                            </p>
+                            <p>
+                                Rightmost derivations are used in bottom-up parsers (like <code class="code-inline">LR</code> parsers) and 
+                                are essential for understanding shift-reduce parsing.
+                            </p>
+                            <div class="example-box">
+                                <strong>Example:</strong> Grammar <code class="code-inline">S → aS | b</code>
+                                <div class="derivation-example">
+                                    S<br/>
+                                    ⇒ aS<br/>
+                                    ⇒ ab
+                                </div>
+                                <p class="example-caption">At each step, we replace the rightmost <code class="code-inline">S</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Parse Tree -->
+                    <div class="theory-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Parse Tree (Derivation Tree)</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                A <span class="term-highlight">parse tree</span> (or <span class="term-highlight">derivation tree</span>) is a 
+                                tree representation of a derivation. It visually shows the hierarchical structure of how a 
+                                string is generated from a grammar.
+                            </p>
+                            <div class="tree-structure">
+                                <strong>Tree Properties:</strong>
+                                <ul class="property-list">
+                                    <li><strong>Root:</strong> The start symbol</li>
+                                    <li><strong>Internal Nodes:</strong> Non-terminals</li>
+                                    <li><strong>Leaf Nodes:</strong> Terminals (or ε)</li>
+                                    <li><strong>Edges:</strong> Represent production rule applications</li>
+                                </ul>
+                            </div>
+                            <p class="info-box">
+                                <strong>Key Insight:</strong> Reading leaves left-to-right gives the generated string. 
+                                All valid parse trees for a string represent the same derivation semantically.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ========== COLUMN 3: Relationships & Application ========== -->
+                <div class="theory-column">
+
+                    <!-- Card: Derivation vs Parse Tree -->
+                    <div class="theory-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Derivation vs Parse Tree</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="comparison-table">
+                                <div class="comp-row">
+                                    <div class="comp-label"><strong>Aspect</strong></div>
+                                    <div class="comp-left"><strong>Derivation</strong></div>
+                                    <div class="comp-right"><strong>Parse Tree</strong></div>
+                                </div>
+                                <div class="comp-row">
+                                    <div class="comp-label">Representation</div>
+                                    <div class="comp-left">Sequential steps</div>
+                                    <div class="comp-right">Hierarchical tree</div>
+                                </div>
+                                <div class="comp-row">
+                                    <div class="comp-label">Order Matters</div>
+                                    <div class="comp-left">Yes — shows sequence</div>
+                                    <div class="comp-right">No — structure only</div>
+                                </div>
+                                <div class="comp-row">
+                                    <div class="comp-label">Uniqueness</div>
+                                    <div class="comp-left">Multiple per tree</div>
+                                    <div class="comp-right">One tree per parse</div>
+                                </div>
+                                <div class="comp-row">
+                                    <div class="comp-label">Use Case</div>
+                                    <div class="comp-left">Understanding generation</div>
+                                    <div class="comp-right">Compiler AST generation</div>
+                                </div>
+                            </div>
+                            <p class="info-box" style="margin-top: 12px;">
+                                <strong>Relationship:</strong> Every parse tree corresponds to multiple derivations 
+                                (leftmost, rightmost, or others), but all represent the same syntactic structure.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card: Importance in Parsing -->
+                    <div class="theory-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Importance in Parsing & Compilers</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                CFGs, derivations, and parse trees are <strong>critical to compiler design</strong>:
+                            </p>
+                            <div class="importance-list">
+                                <div class="importance-item">
+                                    <span class="importance-icon">🔤</span>
+                                    <div>
+                                        <strong>Syntax Definition:</strong> CFGs formally specify programming language syntax, 
+                                        ensuring all valid programs are recognized.
+                                    </div>
+                                </div>
+                                <div class="importance-item">
+                                    <span class="importance-icon">🔍</span>
+                                    <div>
+                                        <strong>Parsing:</strong> LL and LR parsers use leftmost and rightmost derivations 
+                                        to determine if code is syntactically correct.
+                                    </div>
+                                </div>
+                                <div class="importance-item">
+                                    <span class="importance-icon">🌳</span>
+                                    <div>
+                                        <strong>AST Generation:</strong> Parse trees form the basis of Abstract Syntax Trees (ASTs), 
+                                        used for code generation and optimization.
+                                    </div>
+                                </div>
+                                <div class="importance-item">
+                                    <span class="importance-icon">⚙️</span>
+                                    <div>
+                                        <strong>Semantic Analysis:</strong> Parse trees guide type checking, variable scope resolution, 
+                                        and semantic validation.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========== FULL-WIDTH EXAMPLE ========== -->
+            <div class="theory-full-example">
+                <div class="theory-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Example Grammar: Simple Arithmetic</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="example-grid">
+                            <div class="example-part">
+                                <h4>Grammar Definition</h4>
+                                <div class="grammar-box">
+                                    <div class="grammar-rule">E <span class="arrow">→</span> E + T | T</div>
+                                    <div class="grammar-rule">T <span class="arrow">→</span> T * F | F</div>
+                                    <div class="grammar-rule">F <span class="arrow">→</span> (E) | i</div>
+                                </div>
+                                <p class="grammar-info">
+                                    <strong>Start Symbol:</strong> E<br/>
+                                    <strong>Terminals:</strong> {+, *, (, ), i}<br/>
+                                    <strong>Non-Terminals:</strong> {E, T, F}
+                                </p>
+                            </div>
+                            <div class="example-part">
+                                <h4>Deriving "i + i * i"</h4>
+                                <div class="derivation-steps">
+                                    <div class="step">
+                                        <span class="step-label">Step 0:</span> E
+                                    </div>
+                                    <div class="step-arrow">⇒</div>
+                                    <div class="step">
+                                        <span class="step-label">Step 1:</span> E + T
+                                    </div>
+                                    <div class="step-arrow">⇒</div>
+                                    <div class="step">
+                                        <span class="step-label">Step 2:</span> T + T
+                                    </div>
+                                    <div class="step-arrow">⇒</div>
+                                    <div class="step">
+                                        <span class="step-label">Step 3:</span> F + T
+                                    </div>
+                                    <div class="step-arrow">⇒</div>
+                                    <div class="step">
+                                        <span class="step-label">Step 4:</span> i + T
+                                    </div>
+                                    <div class="step-arrow">⇒</div>
+                                    <div class="step">
+                                        <span class="step-label">Step 5:</span> i + T * F
+                                    </div>
+                                    <div class="step-arrow">⇒</div>
+                                    <div class="step">
+                                        <span class="step-label">Step 6:</span> i + F * F
+                                    </div>
+                                    <div class="step-arrow">⇒</div>
+                                    <div class="step">
+                                        <span class="step-label">Step 7:</span> i + i * i
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="example-part">
+                                <h4>Parse Tree Structure</h4>
+                                <div class="tree-visual">
+                                    <div class="tree-node">E</div>
+                                    <div class="tree-children">
+                                        <div tree-style="margin: 8px 4px;">
+                                            <div class="tree-node">E</div>
+                                            <div class="tree-child">
+                                                <div class="tree-node">T</div>
+                                                <div class="tree-child">
+                                                    <div class="tree-node">F</div>
+                                                    <div class="tree-child">
+                                                        <div class="tree-node terminal">i</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="tree-node operator">+</span>
+                                        <div tree-style="margin: 8px 4px;">
+                                            <div class="tree-node">T</div>
+                                            <div class="tree-children">
+                                                <div class="tree-child">
+                                                    <div class="tree-node">T</div>
+                                                    <div class="tree-child">
+                                                        <div class="tree-node">F</div>
+                                                        <div class="tree-child">
+                                                            <div class="tree-node terminal">i</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <span class="tree-node operator">*</span>
+                                                <div class="tree-child">
+                                                    <div class="tree-node">F</div>
+                                                    <div class="tree-child">
+                                                        <div class="tree-node terminal">i</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="tree-caption">Visual representation of parse tree structure</p>
+                            </div>
+                        </div>
+                        <p class="example-explanation">
+                            This grammar defines arithmetic expressions with proper operator precedence. Multiplication (*) 
+                            binds tighter than addition (+) due to the hierarchical structure. A string like "i + i * i" 
+                            is parsed as i + (i * i), not (i + i) * i, demonstrating how grammar structure enforces semantics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== CONCLUSION ========== -->
+            <div class="theory-conclusion">
+                <div class="conclusion-content">
+                    <h3 class="conclusion-title">💡 Key Takeaways</h3>
+                    <div class="conclusion-points">
+                        <div class="conclusion-point">
+                            <span class="point-number">1</span>
+                            <p>CFGs are the mathematical foundation for defining formal language syntax used in all modern programming languages.</p>
+                        </div>
+                        <div class="conclusion-point">
+                            <span class="point-number">2</span>
+                            <p>Derivations show the <strong>process</strong> of generating a string, while parse trees show the <strong>structure</strong>.</p>
+                        </div>
+                        <div class="conclusion-point">
+                            <span class="point-number">3</span>
+                            <p>Leftmost and rightmost derivations are both valid but differ in the order of symbol replacement — useful for different parsing strategies.</p>
+                        </div>
+                        <div class="conclusion-point">
+                            <span class="point-number">4</span>
+                            <p>Parse trees directly translate to Abstract Syntax Trees (ASTs), which enable semantic analysis and code generation in compilers.</p>
+                        </div>
+                        <div class="conclusion-point">
+                            <span class="point-number">5</span>
+                            <p>Understanding these concepts is essential for compiler design, language implementation, and advanced parsing techniques.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </section>
+    </div>
+</div>
+
+<!-- Footer -->
     <footer id="main-footer">
         <div class="footer-content">
             <p class="footer-text">CFG Derivation Engine <span class="footer-divider">·</span> Theory of Automata &amp; Formal Languages</p>

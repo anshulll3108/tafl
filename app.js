@@ -7,6 +7,9 @@
 let treeRenderer = null;
 let currentGrammar = null;
 let currentTree = null;
+let toggleBtn = null;
+let viewToggleBtn = null;
+let isTheoryView = false;
 
 // Preset data
 const PRESETS = {
@@ -36,11 +39,104 @@ const PRESETS = {
     }
 };
 
-// Initialize renderer
+// Initialize app
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('parse-tree-canvas');
-    treeRenderer = new ParseTreeRenderer(canvas);
+    if (canvas) {
+        treeRenderer = new ParseTreeRenderer(canvas);
+    }
+
+    initializeThemeToggle();
+    initializeViewToggle();
 });
+
+/**
+ * Initialize dark/light mode toggle.
+ */
+function initializeThemeToggle() {
+    toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const startDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+
+    setTheme(startDark);
+
+    toggleBtn.addEventListener('click', () => {
+        const isDark = !document.body.classList.contains('dark');
+        setTheme(isDark);
+    });
+}
+
+/**
+ * Update toggle button UI.
+ */
+function updateThemeUI(isDark) {
+    if (!toggleBtn) return;
+
+    const toggleText = toggleBtn.querySelector('.theme-toggle-text');
+    const toggleIcon = toggleBtn.querySelector('.theme-toggle-icon');
+
+    if (toggleText) {
+        toggleText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    if (toggleIcon) {
+        toggleIcon.textContent = isDark ? '☀️' : '🌙';
+    }
+
+    toggleBtn.setAttribute(
+        'aria-label',
+        isDark ? 'Switch to light mode' : 'Switch to dark mode'
+    );
+}
+
+/**
+ * Apply theme and save it.
+ */
+function setTheme(isDark) {
+    document.body.classList.toggle('dark', isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeUI(isDark);
+}
+
+/**
+ * Initialize view toggle button.
+ */
+function initializeViewToggle() {
+    viewToggleBtn = document.getElementById('view-toggle');
+    if (!viewToggleBtn) return;
+
+    viewToggleBtn.addEventListener('click', () => {
+        isTheoryView = !isTheoryView;
+        switchView();
+    });
+}
+
+/**
+ * Switch between Theory and Simulation views.
+ */
+function switchView() {
+    const simulationView = document.getElementById('simulation-view');
+    const theoryView = document.getElementById('theory-view');
+
+    if (isTheoryView) {
+        simulationView.classList.remove('active');
+        theoryView.classList.add('active');
+        viewToggleBtn.classList.add('active');
+        viewToggleBtn.querySelector('.toggle-label').textContent = 'Simulation';
+        viewToggleBtn.querySelector('.toggle-icon').textContent = '⚙️';
+        document.getElementById('hero').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        theoryView.classList.remove('active');
+        simulationView.classList.add('active');
+        viewToggleBtn.classList.remove('active');
+        viewToggleBtn.querySelector('.toggle-label').textContent = 'Theory';
+        viewToggleBtn.querySelector('.toggle-icon').textContent = '📚';
+        document.getElementById('hero').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
 
 /**
  * Load a preset into the input fields.
@@ -49,19 +145,19 @@ function loadPreset(presetId, element) {
     const preset = PRESETS[presetId];
     if (!preset) return;
 
-    // Update active state on pills
-    document.querySelectorAll('.preset-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.preset-pill').forEach((p) => p.classList.remove('active'));
     if (element) element.classList.add('active');
 
-    // Fill inputs
     document.getElementById('grammar-input').value = preset.grammar;
     document.getElementById('string-input').value = preset.string;
     document.getElementById('start-symbol').value = '';
 
     showStatus(`Loaded preset: "${preset.name}". Click Generate to see derivations.`, 'success');
 
-    // Smooth scroll to input
-    document.getElementById('input-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('input-section').scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
 }
 
 /**
@@ -74,56 +170,56 @@ function handleDerive() {
     const targetString = document.getElementById('string-input').value.trim();
     const startSymbolInput = document.getElementById('start-symbol').value.trim();
 
-    // Validate inputs
     if (!grammarText) {
         showStatus('Please enter grammar production rules.', 'error');
         return;
     }
+
     if (targetString === '') {
         showStatus('Please enter a target string to derive. Use ε for empty string.', 'warning');
         return;
     }
 
     try {
-        // Parse grammar
         const grammar = CFGParser.parse(grammarText, startSymbolInput);
         currentGrammar = grammar;
 
-        // Display parsed grammar
         displayGrammar(grammar);
 
-        // Handle epsilon target
-        const actualTarget = (targetString === 'ε' || targetString.toLowerCase() === 'epsilon') ? '' : targetString;
+        const actualTarget =
+            targetString === 'ε' || targetString.toLowerCase() === 'epsilon'
+                ? ''
+                : targetString;
 
-        // Find derivations
         const engine = new DerivationEngine(grammar);
 
         const leftResult = engine.findLeftmostDerivation(actualTarget);
         const rightResult = engine.findRightmostDerivation(actualTarget);
 
-        // Display results
         displayDerivation('leftmost-derivation', leftResult, 'leftmost');
         displayDerivation('rightmost-derivation', rightResult, 'rightmost');
 
-        // Render parse tree (from leftmost if available, otherwise rightmost)
         const treeResult = leftResult || rightResult;
-        if (treeResult && treeResult.tree) {
+        if (treeResult && treeResult.tree && treeRenderer) {
             currentTree = treeResult.tree;
             treeRenderer.render(currentTree);
         }
 
-        // Show results section
         document.getElementById('results-section').classList.remove('hidden');
 
         if (!leftResult && !rightResult) {
-            showStatus(`Could not derive "${targetString}" from the grammar. The string may not be in the language, or the derivation tree is too deep.`, 'warning');
+            showStatus(
+                `Could not derive "${targetString}" from the grammar. The string may not be in the language, or the derivation tree is too deep.`,
+                'warning'
+            );
         } else {
             showStatus(`Derivation found for "${targetString}" successfully!`, 'success');
         }
 
-        // Scroll to results
-        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+        document.getElementById('results-section').scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
     } catch (e) {
         showStatus(e.message, 'error');
         console.error(e);
@@ -138,7 +234,6 @@ function displayGrammar(grammar) {
     let html = '';
     let ruleNum = 1;
 
-    // Group rules by LHS
     const grouped = {};
     for (const rule of grammar.rules) {
         if (!grouped[rule.lhs]) grouped[rule.lhs] = [];
@@ -146,13 +241,21 @@ function displayGrammar(grammar) {
     }
 
     for (const [lhs, rules] of Object.entries(grouped)) {
-        const alternatives = rules.map(r => {
-            return r.rhs.map(s => {
-                if (s.type === 'nonterminal') return `<span class="non-terminal">${CFGParser.escapeHTML(s.value)}</span>`;
-                if (s.type === 'epsilon') return `<span class="epsilon">ε</span>`;
-                return `<span class="terminal">${CFGParser.escapeHTML(s.value)}</span>`;
-            }).join('');
-        }).join('<span class="separator">|</span>');
+        const alternatives = rules
+            .map((r) => {
+                return r.rhs
+                    .map((s) => {
+                        if (s.type === 'nonterminal') {
+                            return `<span class="non-terminal">${CFGParser.escapeHTML(s.value)}</span>`;
+                        }
+                        if (s.type === 'epsilon') {
+                            return `<span class="epsilon">ε</span>`;
+                        }
+                        return `<span class="terminal">${CFGParser.escapeHTML(s.value)}</span>`;
+                    })
+                    .join('');
+            })
+            .join('<span class="separator">|</span>');
 
         html += `<div class="grammar-rule">
             <span class="rule-number">${ruleNum}.</span>
@@ -163,9 +266,8 @@ function displayGrammar(grammar) {
         ruleNum++;
     }
 
-    // Add summary info
-    html += `<div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,140,50,0.08);">
-        <span style="font-size: 0.75rem; color: var(--text-dim);">
+    html += `<div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-color);">
+        <span style="font-size: 0.75rem; color: var(--text-secondary);">
             Non-terminals: {${[...grammar.nonTerminals].join(', ')}} &nbsp;|&nbsp;
             Terminals: {${[...grammar.terminals].join(', ')}} &nbsp;|&nbsp;
             Start: ${grammar.startSymbol}
@@ -188,13 +290,22 @@ function displayDerivation(containerId, result, mode) {
 
     let html = '';
     result.steps.forEach((step, index) => {
-        const formHTML = step.form.map((s, sIdx) => {
-            const cls = s.type === 'nonterminal' ? 'nt' : (s.type === 'epsilon' ? 'nt' : 't');
-            return `<span class="${cls}">${CFGParser.escapeHTML(s.value)}</span>`;
-        }).join('');
+        const formHTML = step.form
+            .map((s) => {
+                const cls =
+                    s.type === 'nonterminal'
+                        ? 'nt'
+                        : s.type === 'epsilon'
+                            ? 'nt'
+                            : 't';
+                return `<span class="${cls}">${CFGParser.escapeHTML(s.value)}</span>`;
+            })
+            .join('');
 
         const arrow = index === 0 ? '' : '<span class="step-arrow">⇒</span>';
-        const ruleInfo = step.rule ? `<span class="step-rule">[${CFGParser.escapeHTML(step.rule)}]</span>` : '<span class="step-rule">[Start]</span>';
+        const ruleInfo = step.rule
+            ? `<span class="step-rule">[${CFGParser.escapeHTML(step.rule)}]</span>`
+            : '<span class="step-rule">[Start]</span>';
 
         html += `<div class="derivation-step" style="animation-delay: ${index * 0.06}s">
             <span class="step-number">Step ${index}</span>
@@ -210,13 +321,11 @@ function displayDerivation(containerId, result, mode) {
  * Switch derivation tab.
  */
 function switchTab(tabId) {
-    // Update buttons
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
         btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
 
-    // Update content
-    document.querySelectorAll('.tab-content').forEach(content => {
+    document.querySelectorAll('.tab-content').forEach((content) => {
         content.classList.toggle('active', content.id === `tab-${tabId}`);
     });
 }
@@ -229,7 +338,7 @@ function clearAll() {
     document.getElementById('string-input').value = '';
     document.getElementById('start-symbol').value = '';
     document.getElementById('results-section').classList.add('hidden');
-    document.querySelectorAll('.preset-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.preset-pill').forEach((p) => p.classList.remove('active'));
     hideStatus();
     currentGrammar = null;
     currentTree = null;
@@ -253,6 +362,9 @@ function showStatus(message, type) {
     msg.textContent = message;
 }
 
+/**
+ * Hide status bar.
+ */
 function hideStatus() {
     document.getElementById('status-bar').classList.add('hidden');
 }
