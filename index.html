@@ -10,21 +10,27 @@
 <body>
 
     <!-- Hero Section -->
-    <header class="hero-section" id="hero">
-        <h1 class="hero-title">CFG Derivation &amp; Parse Tree Generator</h1>
-        <p class="hero-subtitle">Leftmost &amp; rightmost derivations • parse tree • fully offline</p>
-    </header>
+<header class="hero-section" id="hero">
+    <h1 class="hero-title">CFG Derivation &amp; Parse Tree Generator</h1>
+    <p class="hero-subtitle">Leftmost &amp; rightmost derivations • parse tree • fully offline</p>
 
-    <!-- Preset Pills -->
-    <section class="preset-section" id="preset-section">
-        <p class="preset-label">⚡ Try Presets</p>
-        <div class="preset-pills" id="preset-pills">
-            <button class="preset-pill" data-preset="anbn" onclick="loadPreset('anbn', this)">aⁿbⁿ</button>
-            <button class="preset-pill" data-preset="simpleab" onclick="loadPreset('simpleab', this)">Simple AB</button>
-            <button class="preset-pill" data-preset="arithmetic" onclick="loadPreset('arithmetic', this)">Arithmetic</button>
-            <button class="preset-pill" data-preset="palindrome" onclick="loadPreset('palindrome', this)">Palindrome</button>
-        </div>
-    </section>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
+        <span class="theme-toggle-icon">🌙</span>
+        <span class="theme-toggle-text">Dark Mode</span>
+    </button>
+</header>
+
+<!-- Preset Pills -->
+<section class="preset-section" id="preset-section">
+    <p class="preset-label">⚡ Try Presets</p>
+    <div class="preset-pills" id="preset-pills">
+        <button class="preset-pill" data-preset="anbn" onclick="loadPreset('anbn', this)">aⁿbⁿ</button>
+        <button class="preset-pill" data-preset="simpleab" onclick="loadPreset('simpleab', this)">Simple AB</button>
+        <button class="preset-pill" data-preset="arithmetic" onclick="loadPreset('arithmetic', this)">Arithmetic</button>
+        <button class="preset-pill" data-preset="palindrome" onclick="loadPreset('palindrome', this)">Palindrome</button>
+    </div>
+</section>
+
 
     <!-- Main Content -->
     <main id="app-main">
