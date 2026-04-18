@@ -117,10 +117,6 @@ npm run build
 npm run preview
 ```
 
-## License
-
-MIT
-
 ## Author
 
-Built for academic study in Theory of Automata & Formal Languages (TAFL)
+SAUMYA ANSHUL
