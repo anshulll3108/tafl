@@ -318,6 +318,130 @@ class DerivationEngine {
             children: node.children ? node.children.map(c => this._cloneTree(c)) : null
         };
     }
+
+    // =========================================================
+    //  AMBIGUITY DETECTION
+    // =========================================================
+
+    /**
+     * Check if the grammar is ambiguous for a given target string.
+     *
+     * A grammar is ambiguous for a string w if there exist two or more
+     * distinct leftmost derivations for w. This method attempts to find
+     * at least two such derivations using BFS.
+     *
+     * Unlike the normal derivation search, this method does NOT use a
+     * global visited set (which would prevent discovery of alternative
+     * paths that pass through the same sentential form). Instead, it
+     * relies on strict depth and state limits to avoid infinite loops.
+     *
+     * @param {string} target - The string to check for ambiguity
+     * @returns {{ isAmbiguous: boolean, derivations: Array }} 
+     *   derivations contains the distinct leftmost derivation step arrays found
+     */
+    checkAmbiguity(target) {
+        const { rules, startSymbol } = this.grammar;
+        const maxDepth = 15;
+        const maxStates = 80000;
+
+        const startTree = { symbol: startSymbol, type: 'nonterminal', children: null };
+        const startForm = this._getSententialForm(startTree);
+
+        const queue = [{
+            tree: startTree,
+            steps: [{ form: startForm, rule: null }],
+            ruleSequence: '',  // track the sequence of rules applied
+            depth: 0
+        }];
+
+        const foundDerivations = [];
+        const foundRuleSequences = new Set();
+        let statesExplored = 0;
+
+        console.group(`[Ambiguity Check] Checking for "${target}"`);
+
+        while (queue.length > 0 && statesExplored < maxStates) {
+            const current = queue.shift();
+            statesExplored++;
+
+            const ntLeaf = this._findNTLeaf(current.tree, 'leftmost');
+
+            if (!ntLeaf) {
+                // All leaves are terminals — check if it matches target
+                const derived = this._getTerminalString(current.tree);
+                if (derived === target) {
+                    const ruleSeq = current.ruleSequence;
+                    if (!foundRuleSequences.has(ruleSeq)) {
+                        foundRuleSequences.add(ruleSeq);
+                        foundDerivations.push({
+                            steps: current.steps,
+                            tree: current.tree
+                        });
+
+                        console.log(`  Found derivation #${foundDerivations.length}: ${ruleSeq}`);
+
+                        if (foundDerivations.length >= 2) {
+                            console.log(`✓ Grammar is AMBIGUOUS for "${target}" (${statesExplored} states)`);
+                            console.groupEnd();
+                            return { isAmbiguous: true, derivations: foundDerivations };
+                        }
+                    }
+                }
+                continue;
+            }
+
+            if (current.depth >= maxDepth) continue;
+
+            const ntSymbol = ntLeaf.node.symbol;
+
+            for (const rule of rules) {
+                if (rule.lhs !== ntSymbol) continue;
+
+                const newTree = this._cloneTree(current.tree);
+                const targetNode = this._getNodeByPath(newTree, ntLeaf.path);
+                if (!targetNode) continue;
+
+                if (rule.rhs[0].type === 'epsilon') {
+                    targetNode.children = [{
+                        symbol: 'ε',
+                        type: 'epsilon',
+                        children: null
+                    }];
+                } else {
+                    targetNode.children = rule.rhs.map(s => ({
+                        symbol: s.value,
+                        type: s.type,
+                        children: null
+                    }));
+                }
+
+                const newForm = this._getSententialForm(newTree);
+
+                // Pruning
+                if (!this._isConsistent(newForm, target, 'leftmost')) continue;
+                const termCount = newForm.filter(s => s.type === 'terminal').length;
+                if (termCount > target.length) continue;
+
+                const newRuleSeq = current.ruleSequence + '|' + rule.original;
+
+                const newSteps = [
+                    ...current.steps,
+                    { form: newForm, rule: rule.original }
+                ];
+
+                queue.push({
+                    tree: newTree,
+                    steps: newSteps,
+                    ruleSequence: newRuleSeq,
+                    depth: current.depth + 1
+                });
+            }
+        }
+
+        console.log(`✗ Grammar is ${foundDerivations.length > 0 ? 'NOT ambiguous' : 'undetermined'} for "${target}" (${statesExplored} states)`);
+        console.groupEnd();
+        return { isAmbiguous: false, derivations: foundDerivations };
+    }
 }
 
 if (typeof module !== 'undefined' && module.exports) {

@@ -44,6 +44,7 @@
                 <button class="preset-pill" data-preset="simpleab" onclick="loadPreset('simpleab', this)">Simple AB</button>
                 <button class="preset-pill" data-preset="arithmetic" onclick="loadPreset('arithmetic', this)">Arithmetic</button>
                 <button class="preset-pill" data-preset="palindrome" onclick="loadPreset('palindrome', this)">Palindrome</button>
+                <button class="preset-pill" data-preset="ambiguous" onclick="loadPreset('ambiguous', this)">⚠ Ambiguous</button>
             </div>
         </section>
 
@@ -118,6 +119,35 @@
                 </div>
                 <div class="panel-body">
                     <div id="grammar-display" class="grammar-display"></div>
+                </div>
+            </div>
+
+            <!-- Ambiguity Warning Panel -->
+            <div id="ambiguity-panel" class="glass-panel result-panel ambiguity-panel hidden">
+                <div class="panel-header ambiguity-header">
+                    <div class="panel-indicator ambiguity-indicator"></div>
+                    <h2>Ambiguity Detected <span class="panel-badge ambiguity-badge">Warning</span></h2>
+                </div>
+                <div class="panel-body">
+                    <div class="ambiguity-content">
+                        <div class="ambiguity-icon-row">
+                            <span class="ambiguity-icon">⚠️</span>
+                            <div>
+                                <p class="ambiguity-title">This grammar is <strong>ambiguous</strong> for the given input string.</p>
+                                <p class="ambiguity-desc">
+                                    Multiple distinct leftmost derivations (and thus multiple parse trees) exist for this string. 
+                                    An ambiguous grammar can cause parsing conflicts in compilers.
+                                </p>
+                            </div>
+                        </div>
+                        <div id="ambiguity-derivations" class="ambiguity-derivations"></div>
+                        <div class="ambiguity-info">
+                            <p><strong>💡 What does this mean?</strong></p>
+                            <p>A grammar is ambiguous if there exists at least one string that can be derived in two or more distinct ways using leftmost derivation. 
+                               This means the string has multiple parse trees, which can lead to different semantic interpretations. 
+                               Consider restructuring the grammar to eliminate ambiguity (e.g., by introducing precedence/associativity rules).</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -36,6 +36,12 @@ const PRESETS = {
         string: 'aba',
         start: 'S',
         name: 'Palindrome'
+    },
+    ambiguous: {
+        grammar: `E -> E+E | E*E | i`,
+        string: 'i+i*i',
+        start: 'E',
+        name: 'Ambiguous'
     }
 };
 
@@ -205,6 +211,10 @@ function handleDerive() {
             treeRenderer.render(currentTree);
         }
 
+        // --- Ambiguity Check ---
+        const ambiguityResult = engine.checkAmbiguity(actualTarget);
+        displayAmbiguityResult(ambiguityResult, targetString);
+
         document.getElementById('results-section').classList.remove('hidden');
 
         if (!leftResult && !rightResult) {
@@ -212,8 +222,10 @@ function handleDerive() {
                 `Could not derive "${targetString}" from the grammar. The string may not be in the language, or the derivation tree is too deep.`,
                 'warning'
             );
+        } else if (ambiguityResult.isAmbiguous) {
+            showStatus(`Derivation found for "${targetString}" — ⚠ Grammar is AMBIGUOUS for this string!`, 'warning');
         } else {
-            showStatus(`Derivation found for "${targetString}" successfully!`, 'success');
+            showStatus(`Derivation found for "${targetString}" successfully! Grammar appears unambiguous for this string.`, 'success');
         }
 
         document.getElementById('results-section').scrollIntoView({
@@ -338,10 +350,57 @@ function clearAll() {
     document.getElementById('string-input').value = '';
     document.getElementById('start-symbol').value = '';
     document.getElementById('results-section').classList.add('hidden');
+    document.getElementById('ambiguity-panel').classList.add('hidden');
     document.querySelectorAll('.preset-pill').forEach((p) => p.classList.remove('active'));
     hideStatus();
     currentGrammar = null;
     currentTree = null;
+}
+
+/**
+ * Display ambiguity check result.
+ */
+function displayAmbiguityResult(result, targetString) {
+    const panel = document.getElementById('ambiguity-panel');
+    const derivContainer = document.getElementById('ambiguity-derivations');
+
+    if (!result.isAmbiguous) {
+        panel.classList.add('hidden');
+        derivContainer.innerHTML = '';
+        return;
+    }
+
+    panel.classList.remove('hidden');
+
+    let html = '';
+    result.derivations.forEach((deriv, dIdx) => {
+        html += `<div class="ambiguity-deriv-block">
+            <h4><span class="deriv-num">${dIdx + 1}</span> Leftmost Derivation ${dIdx + 1}</h4>`;
+
+        deriv.steps.forEach((step, sIdx) => {
+            const formHTML = step.form
+                .map(s => {
+                    if (s.type === 'nonterminal') return `<span class="amb-nt">${CFGParser.escapeHTML(s.value)}</span>`;
+                    return `<span class="amb-t">${CFGParser.escapeHTML(s.value)}</span>`;
+                })
+                .join('');
+
+            const ruleLabel = step.rule
+                ? `<span class="amb-rule">[${CFGParser.escapeHTML(step.rule)}]</span>`
+                : `<span class="amb-rule">[Start]</span>`;
+
+            const arrow = sIdx === 0 ? '' : ' ⇒ ';
+
+            html += `<div class="ambiguity-deriv-step">
+                <span class="amb-step-num">Step ${sIdx}</span>
+                ${arrow}${formHTML} ${ruleLabel}
+            </div>`;
+        });
+
+        html += `</div>`;
+    });
+
+    derivContainer.innerHTML = html;
 }
 
 /**

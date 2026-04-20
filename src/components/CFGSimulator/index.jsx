@@ -6,6 +6,7 @@ import { CYKTable } from './CYKTable';
 import { ParseTreeD3 } from './ParseTreeD3';
 import { DerivationStepper } from './DerivationStepper';
 import { LL1Table } from './LL1Table';
+import { AmbiguityChecker } from './AmbiguityChecker';
 import { useTheme } from '../../context/ThemeContext';
 import CFGParser from '../../utils/cfgParser';
 
@@ -168,6 +169,16 @@ export function CFGSimulator() {
                   >
                     LL(1) table
                   </button>
+                  <button
+                    onClick={() => setActiveTab('ambiguity')}
+                    className={`px-4 py-2 font-medium rounded-t-lg transition-colors ${
+                      activeTab === 'ambiguity'
+                        ? 'bg-electric-blue text-white'
+                        : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700'
+                    }`}
+                  >
+                    Ambiguity Detection
+                  </button>
                 </div>
 
                 {/* Tab Content */}
@@ -246,6 +257,10 @@ export function CFGSimulator() {
 
                   {activeTab === 'll1' && (
                     <LL1Table grammar={grammar} />
+                  )}
+
+                  {activeTab === 'ambiguity' && (
+                    <AmbiguityChecker grammar={grammar} isDark={isDark} />
                   )}
                 </div>
               </>
